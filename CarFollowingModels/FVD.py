@@ -18,13 +18,9 @@ class FVD:
         self.h_pc = h_pc
 
 
-    def tanh(self, inputx):
-        return (math.exp(inputx) - math.exp(-inputx)) / (math.exp(inputx) + math.exp(-inputx))
-
-
     def getOptimalVelocity(self, nowVeh, precedVeh):
         headway = precedVeh.xPos - nowVeh.xPos
-        return (1/2)*nowVeh.maxVelocity*(self.tanh(headway-self.h_pc)+self.tanh(self.h_pc))
+        return (1/2)*nowVeh.maxVelocity*(math.tanh(headway-self.h_pc)+math.tanh(self.h_pc))
         
 
     def getAcceleration(self, nowVeh, precedVeh):

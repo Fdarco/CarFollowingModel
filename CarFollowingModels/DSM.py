@@ -13,7 +13,10 @@ import math
 # SM_DL DSM 下限
 # SM_DH DSM 上限
 class DSM:
-    def __init__(self, tau_2=0.15, alpha_1=6.43, alpha_2=12.22, SM_DL=0.75, SM_DH=0.94) -> None:
+    def __init__(
+        self, tau_2=0.15, alpha_1=6.43, alpha_2=12.22, 
+        SM_DL=0.75, SM_DH=0.94
+        ) -> None:
         self.name = 'DSM'
         self.tau_2 = tau_2
         self.alpha_1 = alpha_1
