@@ -60,9 +60,13 @@ class vehicle:
 
     def DSMStep(self):
         acceleration = self.acceSeq.get()
+        # 先计算位置，再更新速度，这样位移的计算算的面积就是梯形的
+        Vdis = self.velocity * self.dt
+        Adis = acceleration * pow(acceleration, 2) /2
+        self.xPos = self.xPos + Vdis + Adis
+
         tempVelocity = self.velocity + acceleration
         self.velocityCst(tempVelocity)
-        self.xPos = self.xPos + self.velocity*self.dt
 
         if self.precedVeh:
             acceDSM = self.CFModel.getAcceleration(self, self.precedVeh)
@@ -83,10 +87,13 @@ class vehicle:
             tempAcceleration = 0
 
         acceleration = self.accelerationCst(tempAcceleration)
+        # 先计算位置，再更新速度，这样位移的计算算的面积就是梯形的
+        Vdis = self.velocity * self.dt
+        Adis = acceleration * pow(acceleration, 2) /2
+        self.xPos = self.xPos + Vdis + Adis
+
         tempVelocity = self.velocity + acceleration
         self.velocityCst(tempVelocity)
-
-        self.xPos = self.xPos + self.velocity * self.dt
 
     
     def __str__(self) -> str:

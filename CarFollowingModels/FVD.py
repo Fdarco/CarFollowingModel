@@ -29,6 +29,11 @@ class FVD:
         acceleration = self.alpha*(optimalVelocity-nowVeh.velocity) + self.beta*headway
         return acceleration
 
+    def __str__(self) -> str:
+        return '{}: alpha: {}, beta: {}, h_pc: {}'.format(
+            self.name, self.alpha, self.beta, self.h_pc
+        )
+
 
 if __name__ == '__main__':
     from matplotlib import pyplot as plt
