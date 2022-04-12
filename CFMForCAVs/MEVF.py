@@ -4,14 +4,11 @@
 # ****************************************************************************
 # MEVF: mean expected velocity field
 # key parameter: sensitivity, strength factor, mean expected velocity
-# cite: Zhu Wen-Xing et al. A new car-following model for autonomous vehicles
+# cite: Zhu Wen-Xing, et al. A new car-following model for autonomous vehicles
 # flow with mean expected velocity field
 
 
 import math
-from signal import raise_signal
-from matplotlib.pyplot import flag
-import numpy as np
 from vehicle import vehicle
 
 # alpha in [0.8, 1.2, 1.6, 2.0] 敏感系数，值越大，越稳定
