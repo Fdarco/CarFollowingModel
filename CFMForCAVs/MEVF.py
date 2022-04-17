@@ -16,11 +16,12 @@ from vehicle import vehicle
 # beta in [0.1, 0.2, 0.3, 0.4] 强度系数，表示当前车对前面车辆速度信息的敏感程度
 # gamma in [1, 2, 3, 4] 速度域参数，表示获取前面 gamma 辆车的信息
 class MEVF:
-    def __init__(self, alpha = 1.2, beta = 0.2, gamma = 2) -> None:
+    def __init__(self, alpha = 1.2, beta = 0.3, gamma = 2, connRange = 300) -> None:
         self.name = 'MEVF'
         self.alpha = alpha 
         self.beta = beta
         self.gamma = gamma
+        self.connRange = connRange
 
 
     def getOptimalVelocity(self, nowVeh: vehicle) -> float:
@@ -34,27 +35,30 @@ class MEVF:
 
 
     def getVmf(self, precedList: list[vehicle]) -> float:
-        gamma = len(precedList)
+        cnt = len(precedList)
         # 这里按照论文里做的，获取前面几辆车的最优速度
         # 实际上和前车进行信息交互可能会更好一些
         # 当然进行信息交互会有频率的约束，仿真的 timestep 也需要设置合理
         sumOptVel = 0
         for veh in precedList:
-            sumOptVel += self.getOptimalVelocity(veh)
+            # sumOptVel += self.getOptimalVelocity(veh)
+            sumOptVel += veh.velocity
         
-        return sumOptVel / gamma
+        return sumOptVel / cnt 
 
 
     def getAcceleration(self, nowVeh: vehicle) -> float:
         cnt = 0
         precedList = []
         root = nowVeh
-        while root.precedVeh and cnt <= self.gamma:
+        while root.precedVeh and (root.precedVeh.xPos - root.xPos <= self.connRange):
             rp = root.precedVeh
             precedList.append(rp)
             root = rp
             cnt += 1
 
+        if not precedList:
+            print(nowVeh)
         Vmf = self.getVmf(precedList)
         Vo = self.getOptimalVelocity(nowVeh)
         acceleration = self.alpha * (Vo + self.beta * (Vmf - Vo) - nowVeh.velocity)

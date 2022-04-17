@@ -62,7 +62,7 @@ class vehicle:
         acceleration = self.acceSeq.get()
         # 先计算位置，再更新速度，这样位移的计算算的面积就是梯形的
         Vdis = self.velocity * self.dt
-        Adis = acceleration * pow(acceleration, 2) /2
+        Adis = acceleration * pow(self.dt, 2) /2
         self.xPos = self.xPos + Vdis + Adis
 
         tempVelocity = self.velocity + acceleration
@@ -89,7 +89,7 @@ class vehicle:
         acceleration = self.accelerationCst(tempAcceleration)
         # 先计算位置，再更新速度，这样位移的计算算的面积就是梯形的
         Vdis = self.velocity * self.dt
-        Adis = acceleration * pow(acceleration, 2) /2
+        Adis = acceleration * pow(self.dt, 2) /2
         self.xPos = self.xPos + Vdis + Adis
 
         tempVelocity = self.velocity + acceleration

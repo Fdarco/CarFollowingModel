@@ -7,7 +7,7 @@ import queue
 class vehicle:
     def __init__(
         self, id, xPos, yPos, velocity, CFModel,
-        dt = 0.01, tau = 0.7, maxVelocity = 20.5, 
+        dt = 0.1, tau = 0.7, maxVelocity = 20.5, 
         desireVelocity = 33, deceleration = 7.5, length = 5,
     ):
         self.id = id
@@ -56,9 +56,9 @@ class vehicle:
         return acceFree
 
 
-    def getMEVEStep(self):
+    def MEVEStep(self):
         if self.precedVeh:
-            acceDSM = self.CFModel.getAcceleration(self, self.precedVeh)
+            acceDSM = self.CFModel.getAcceleration(self)
             acceFree = self.getFreeAcce()
             tempAcceleration = min(acceDSM, acceFree)
         else:
@@ -67,7 +67,7 @@ class vehicle:
         self.acceleration= self.accelerationCst(tempAcceleration)
         # 先计算位置，再更新速度，这样位移的计算算的面积就是梯形的
         Vdis = self.velocity * self.dt
-        Adis = self.acceleration * pow(self.acceleration, 2) /2
+        Adis = self.acceleration * pow(self.dt, 2) /2
         self.xPos = self.xPos + Vdis + Adis
 
         tempVelocity = self.velocity + self.acceleration
@@ -75,4 +75,11 @@ class vehicle:
         
 
     def __str__(self) -> str:
-        return '{}: xPos = {}; velocity = {}'.format(self.id, self.xPos, self.velocity)
+        if self.precedVeh:
+            return '{}: xPos = {}; velocity = {}; precedVeh: {}'.format(
+                    self.id, self.xPos, self.velocity, self.precedVeh.id
+                )
+        else:
+            return '{}: xPos = {}; velocity = {}; precedVeh: {}'.format(
+                    self.id, self.xPos, self.velocity, None
+                )
