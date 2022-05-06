@@ -11,12 +11,17 @@
 import math
 from vehicle import vehicle
 
+
+def senseVeolcity(nowVeh: vehicle):
+    raise NotImplementedError
+
+
 # alpha in [0.8, 1.2, 1.6, 2.0] 敏感系数，值越大，越稳定
 # 0 < beta < 0.5
 # beta in [0.1, 0.2, 0.3, 0.4] 强度系数，表示当前车对前面车辆速度信息的敏感程度
 # gamma in [1, 2, 3, 4] 速度域参数，表示获取前面 gamma 辆车的信息
 class MEVF:
-    def __init__(self, alpha = 1.2, beta = 0.3, gamma = 2, connRange = 300) -> None:
+    def __init__(self, alpha = 1.2, beta = 0, gamma = 2, connRange = 300) -> None:
         self.name = 'MEVF'
         self.alpha = alpha 
         self.beta = beta
@@ -59,6 +64,7 @@ class MEVF:
 
         if not precedList:
             print(nowVeh)
+            print(nowVeh.precedVeh)
         Vmf = self.getVmf(precedList)
         Vo = self.getOptimalVelocity(nowVeh)
         acceleration = self.alpha * (Vo + self.beta * (Vmf - Vo) - nowVeh.velocity)

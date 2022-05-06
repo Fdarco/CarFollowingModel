@@ -22,8 +22,8 @@ class Model():
         self.RSHWList = []
 
 
-    def genVehs(self):
-        cfm = MEVF(alpha=2.0, connRange=150)
+    def genVehs(self, alpha, connRange):
+        cfm = MEVF(alpha, connRange)
         gap = 0
         for i in range(self.numVeh):
             veh = vehicle(
@@ -33,7 +33,7 @@ class Model():
             self.vehList.append(veh)
             gap += random.uniform(5, 15)
         
-        
+
         for j in range(len(self.vehList) - 1):
             self.vehList[j].precedVeh = self.vehList[j+1]
             self.headwayList.append([self.vehList[j+1].xPos - self.vehList[j].xPos])
@@ -73,39 +73,50 @@ if __name__ == '__main__':
     from matplotlib import pyplot as plt
 
     model = Model(numVeh=20)
-    model.genVehs()
+    alpha = float(input('alpha: '))
+    connRange = int(input('connRange: '))
+    model.genVehs(alpha, connRange)
     # print(model.xPosList)
     # for veh in model.vehList:
     #     print(veh)
 
-    TotalStep = 1000
+    TotalStep = 100
     timestep = 0
     while timestep < TotalStep:
+        print(timestep)
         model.run()
         timestep += 1
 
-    for i in range(3):
-        # print(model.xPosList[i][-10:])
-        print('velocity:')
-        print(model.velocityList[i][-10:])
-        print(np.mean(model.velocityList[i][-10:]))
-        print(np.std(model.velocityList[i][-10:]))
-        # print(model.acceList[i][-10:])
-        print('headway:')
-        print(model.headwayList[i][-10:])
-        print(np.mean(model.headwayList[i][-10:]))
-        print(np.std(model.headwayList[i][-10:]))
-        print('required safety headway:')
-        print(model.RSHWList[i][-10:])
-        print(np.mean(model.RSHWList[i][-10:]))
-        print(np.std(model.RSHWList[i][-10:]))
-        print('='*20)
+    # for i in range(3):
+    #     # print(model.xPosList[i][-10:])
+    #     print('velocity:')
+    #     print(model.velocityList[i][-10:])
+    #     print(np.mean(model.velocityList[i][-10:]))
+    #     print(np.std(model.velocityList[i][-10:]))
+    #     # print(model.acceList[i][-10:])
+    #     print('headway:')
+    #     print(model.headwayList[i][-10:])
+    #     print(np.mean(model.headwayList[i][-10:]))
+    #     print(np.std(model.headwayList[i][-10:]))
+    #     print('required safety headway:')
+    #     print(model.RSHWList[i][-10:])
+    #     print(np.mean(model.RSHWList[i][-10:]))
+    #     print(np.std(model.RSHWList[i][-10:]))
+    #     print('='*20)
 
-    # for i in range(5, 10):
-    #     plt.plot(range(len(model.headwayList[i])), model.headwayList[i], label='veh_{}'.format(i))
+    for i in range(10):
+        plt.plot(range(len(model.velocityList[i])), model.velocityList[i], label='veh_{}'.format(i))
 
-    # plt.legend(loc='best')
-    # plt.show()
+    plt.legend(loc='best')
+    plt.title('velocity')
+    plt.show()
+
+    for i in range(10):
+        plt.plot(range(len(model.headwayList[i])), model.headwayList[i], label='veh_{}'.format(i))
+
+    plt.legend(loc='best')
+    plt.title('headway')
+    plt.show()
 
 
     
