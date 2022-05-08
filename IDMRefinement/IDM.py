@@ -89,7 +89,6 @@ class IDM():
         return V
 
 
-
     def calc_acc(self, bwd: Moveable, fwd: Moveable):
         '''
         :param bwd: Moveable, The current vehicle

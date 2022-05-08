@@ -2,7 +2,8 @@ from Cars import *
 from Constants import *
 from CarFactory import *
 from LaneChange import *
-from IDM import *
+from IDMExp import *
+# from IDM import *
 from numpy.random import shuffle
 import numpy as np
 

@@ -1,7 +1,8 @@
 from zope.interface import implementer
 from Moveable import Moveable
 from LaneChange import LaneChange
-from IDM import IDM
+from IDMExp import IDM
+# from IDM import IDM
 from Constants import *
 
 @implementer(Moveable)
