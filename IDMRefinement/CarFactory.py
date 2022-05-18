@@ -9,16 +9,16 @@ class CarFactory():
     '''
     Class for generating all kinds of cars by demand
     '''
-    def __init__(self, auto_prob, car_prob, HVModel):
+    def __init__(self, auto_prob, car_prob):
         self.auto_prob, self.car_prob =  auto_prob, car_prob
 
-        # self.car_human_IDM = IDM(v0 = V0_INIT_CAR_KMH / 3.6,
-        #                          a  = A_INIT_CAR_MSII,
-        #                          b  = B_INIT_CAR_MSII,
-        #                          s0 = S0_INIT_HUMAN,
-        #                          T  = T_REACTION_HUMAN)
+        self.car_human_IDM = IDM(v0 = V0_INIT_CAR_KMH / 3.6,
+                                 a  = A_INIT_CAR_MSII,
+                                 b  = B_INIT_CAR_MSII,
+                                 s0 = S0_INIT_HUMAN,
+                                 T  = T_REACTION_HUMAN)
 
-        self.car_human_IDM = HVModel
+        # self.car_human_IDM = HVModel
 
         self.truck_human_IDM = IDM(v0 = V0_INIT_TRUCK_KMH / 3.6,
                                    a  = A_INIT_TRUCK_MSII,
